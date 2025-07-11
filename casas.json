@@ -10,7 +10,7 @@
     "metros_cuadrados": 120,
     "tipo": "Apartamento",
     "descripcion": "Apartamento moderno con excelente vista y vigilancia privada.",
-    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\20241203200818056423000000-o.jpg"
+    "foto": "Imagenes/20241203200818056423000000-o.jpg"
   },
   {
     "id": 2,
@@ -23,7 +23,7 @@
     "metros_cuadrados": 180,
     "tipo": "Casa",
     "descripcion": "Casa amplia con jardín, estacionamiento y fácil acceso a centros comerciales.",
-    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\casa_en_venta_en_naguanagua_carabobo_243_m2_3_hab_5900001739233253971.jpg"
+    "foto": "Imagenes/casa_en_venta_en_naguanagua_carabobo_243_m2_3_hab_5900001739233253971.jpg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
     "metros_cuadrados": 100,
     "tipo": "Townhouse",
     "descripcion": "Townhouse acogedor en conjunto cerrado con piscina y áreas verdes.",
-    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\IMG-20230322-WA0294.jpg"
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
     "metros_cuadrados": 80,
     "tipo": "Apartamento",
     "descripcion": "Apartamento céntrico, ideal para parejas o familias pequeñas.",
-    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\MIL20241116120235.jpg"
+    "foto": "Imagenes/MIL20241116120235.jpg"
   },
   {
     "id": 5,
@@ -62,6 +62,137 @@
     "metros_cuadrados": 250,
     "tipo": "Casa",
     "descripcion": "Casa grande cerca de la playa, perfecta para familias numerosas.",
-    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\las-casas-coloniales-del-casco-historico-de-puerto-cabello-parecen-contar-leyendas-ancestralesjpg-4768.jpg"
+    "foto": "Imagenes/las-casas-coloniales-del-casco-historico-de-puerto-cabello-parecen-contar-leyendas-ancestralesjpg-4768.jpg"
+  },
+  {"Comentario IGNORAR" : "Apartir de aqui no existen imagenes de las casas, solo es un ejemplo para completar el JSON"},
+  {
+    "id": 6,
+    "ciudad": "Los Guayos",
+    "zona": "Paraparal",
+    "precio": 30000,
+    "direccion": "Calle Paraparal, Los Guayos, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 110,
+    "tipo": "Apartamento",
+    "descripcion": "Apartamento en zona tranquila, ideal para familias con niños.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 7,
+    "ciudad": "Tocuyito",
+    "zona": "El Trigal",
+    "precio": 27000,
+    "direccion": "Calle El Trigal, Tocuyito, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 95,
+    "tipo": "Townhouse",
+    "descripcion": "Townhouse en zona residencial con seguridad y áreas recreativas.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 8,
+    "ciudad": "Mariara",
+    "zona": "El Rincón",
+    "precio": 32000,
+    "direccion": "Calle El Rincón, Mariara, Carabobo",
+    "habitaciones": 4,
+    "banos": 3,
+    "metros_cuadrados": 150,
+    "tipo": "Casa",
+    "descripcion": "Casa espaciosa con jardín y garaje, ideal para familias grandes.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 9,
+    "ciudad": "Valencia",
+    "zona": "La Viña",
+    "precio": 40000,
+    "direccion": "Calle La Viña, Valencia, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 130,
+    "tipo": "Apartamento",
+    "descripcion": "Apartamento en zona exclusiva con acabados de lujo y piscina.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 10,
+    "ciudad": "Guacara",
+    "zona": "Yagua",
+    "precio": 23000,
+    "direccion": "Calle Yagua, Guacara, Carabobo",
+    "habitaciones": 2,
+    "banos": 1,
+    "metros_cuadrados": 85,
+    "tipo": "Apartamento",
+    "descripcion": "Apartamento acogedor en zona tranquila, ideal para parejas.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 11,
+    "ciudad": "San Joaquín",
+    "zona": "El Bosque",
+    "precio": 29000,
+    "direccion": "Calle El Bosque, San Joaquín, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 120,
+    "tipo": "Casa",
+    "descripcion": "Casa en zona residencial con áreas verdes y seguridad.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 12,
+    "ciudad": "Naguanagua",
+    "zona": "Valle de Camoruco",
+    "precio": 45000,
+    "direccion": "Calle Valle de Camoruco, Naguanagua, Carabobo",
+    "habitaciones": 4,
+    "banos": 3,
+    "metros_cuadrados": 160,
+    "tipo": "Apartamento",
+    "descripcion": "Apartamento lujoso con vista panorámica y piscina.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 13,
+    "ciudad": "Puerto Cabello",
+    "zona": "Morón",
+    "precio": 48000,
+    "direccion": "Calle Morón, Puerto Cabello, Carabobo",
+    "habitaciones": 5,
+    "banos": 4,
+    "metros_cuadrados": 220,
+    "tipo": "Casa",
+    "descripcion": "Casa amplia con piscina y jardín, ideal para disfrutar en familia.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 14,
+    "ciudad": "Los Guayos",
+    "zona": "Paraparal",
+    "precio": 31000,
+    "direccion": "Calle Paraparal, Los Guayos, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 115,
+    "tipo": "Apartamento",
+    "descripcion": "Apartamento moderno en zona tranquila, ideal para familias.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 15,
+    "ciudad": "Tocuyito",
+    "zona": "El Trigal",
+    "precio": 28000,
+    "direccion": "Calle El Trigal, Tocuyito, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 100,
+    "tipo": "Townhouse",
+    "descripcion": "Townhouse en zona residencial con seguridad y áreas recreativas.",
+    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
   }
 ]

@@ -61,12 +61,13 @@ export default function AIAssistant() {
       sender: "user",
     }
 
-    setMessages((prev) => [...prev, userMessage])
+    const newMessages = [...messages, userMessage]
+    setMessages(newMessages)
     setInput("")
     setIsProcessing(true)
 
     try {
-      const response = await processAIQuery(input, user.tokens)
+      const response = await processAIQuery(input, user.tokens, newMessages)
 
       if (response.error) {
         setMessages((prev) => [

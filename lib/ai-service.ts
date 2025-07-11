@@ -404,7 +404,11 @@ function getResponse(query: string, queryType: string): AIResponse {
 }
 
 // Función principal para procesar consultas de IA
-export async function processAIQuery(query: string, availableTokens: number): Promise<AIResponse> {
+export async function processAIQuery(
+  query: string,
+  availableTokens: number,
+  history: { content: string; sender: "user" | "ai" }[]
+): Promise<AIResponse> {
   // Verificar si el usuario tiene suficientes tokens
   const queryInfo = determineQueryType(query)
   if (availableTokens < queryInfo.cost && availableTokens !== Number.POSITIVE_INFINITY) {
@@ -421,7 +425,7 @@ export async function processAIQuery(query: string, availableTokens: number): Pr
     const res = await fetch("/api/ai", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: query }),
+      body: JSON.stringify({ message: query, history }),
     })
     const data = await res.json()
     if (data.error) {
