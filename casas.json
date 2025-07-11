@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "ciudad": "Valencia",
+    "zona": "Prebo",
+    "precio": 35000,
+    "direccion": "Av. 102, Prebo, Valencia, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 120,
+    "tipo": "Apartamento",
+    "descripcion": "Apartamento moderno con excelente vista y vigilancia privada.",
+    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\20241203200818056423000000-o.jpg"
+  },
+  {
+    "id": 2,
+    "ciudad": "Naguanagua",
+    "zona": "La Granja",
+    "precio": 42000,
+    "direccion": "Calle 5, La Granja, Naguanagua, Carabobo",
+    "habitaciones": 4,
+    "banos": 3,
+    "metros_cuadrados": 180,
+    "tipo": "Casa",
+    "descripcion": "Casa amplia con jardín, estacionamiento y fácil acceso a centros comerciales.",
+    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\casa_en_venta_en_naguanagua_carabobo_243_m2_3_hab_5900001739233253971.jpg"
+  },
+  {
+    "id": 3,
+    "ciudad": "San Diego",
+    "zona": "El Remanso",
+    "precio": 28000,
+    "direccion": "Calle Los Almendros, El Remanso, San Diego, Carabobo",
+    "habitaciones": 3,
+    "banos": 2,
+    "metros_cuadrados": 100,
+    "tipo": "Townhouse",
+    "descripcion": "Townhouse acogedor en conjunto cerrado con piscina y áreas verdes.",
+    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\IMG-20230322-WA0294.jpg"
+  },
+  {
+    "id": 4,
+    "ciudad": "Guacara",
+    "zona": "Centro",
+    "precio": 22000,
+    "direccion": "Av. Bolívar, Centro, Guacara, Carabobo",
+    "habitaciones": 2,
+    "banos": 1,
+    "metros_cuadrados": 80,
+    "tipo": "Apartamento",
+    "descripcion": "Apartamento céntrico, ideal para parejas o familias pequeñas.",
+    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\MIL20241116120235.jpg"
+  },
+  {
+    "id": 5,
+    "ciudad": "Puerto Cabello",
+    "zona": "El Palito",
+    "precio": 50000,
+    "direccion": "Calle El Palito, Puerto Cabello, Carabobo",
+    "habitaciones": 5,
+    "banos": 4,
+    "metros_cuadrados": 250,
+    "tipo": "Casa",
+    "descripcion": "Casa grande cerca de la playa, perfecta para familias numerosas.",
+    "foto": "C:\\Users\\Freddy\\OneDrive\\Escritorio\\JavaScript\\JuanGPT\\Imagenes\\las-casas-coloniales-del-casco-historico-de-puerto-cabello-parecen-contar-leyendas-ancestralesjpg-4768.jpg"
+  }
+]

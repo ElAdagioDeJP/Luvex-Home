@@ -1,0 +1,141 @@
+import type { Property, ExclusiveProperty } from "./types"
+
+// Datos simulados de propiedades
+export const properties: Property[] = [
+  {
+    id: "prop1",
+    title: "Villa Moderna con Jardín",
+    description:
+      "Espectacular villa moderna con amplios ventanales, acabados de lujo y jardín. Ubicada en una de las mejores zonas residenciales con excelentes conexiones y servicios.",
+    price: 750000,
+    location: "Madrid, La Moraleja",
+    bedrooms: 4,
+    bathrooms: 3,
+    size: 320,
+    image: "/images/casa-moderna-1.png",
+    features: ["Jardín", "Garaje doble", "Terraza", "Seguridad 24h", "Domótica"],
+    yearBuilt: 2021,
+    energyRating: "A",
+  },
+  {
+    id: "prop2",
+    title: "Chalet Contemporáneo con Piscina",
+    description:
+      "Impresionante chalet de diseño contemporáneo con piscina infinity y vistas panorámicas al mar. Materiales de primera calidad y sistema de domótica integral.",
+    price: 1250000,
+    location: "Málaga, Marbella",
+    bedrooms: 5,
+    bathrooms: 4,
+    size: 450,
+    image: "/images/casa-moderna-4.png",
+    features: ["Piscina infinity", "Vistas al mar", "Domótica", "Gimnasio", "Cine en casa"],
+    yearBuilt: 2022,
+    energyRating: "A+",
+  },
+  {
+    id: "prop3",
+    title: "Residencia de Diseño Único",
+    description:
+      "Extraordinaria residencia de arquitectura orgánica con diseño curvilíneo integrado en la naturaleza. Piscina natural, grandes espacios abiertos y privacidad absoluta.",
+    price: 1800000,
+    location: "Barcelona, Pedralbes",
+    bedrooms: 4,
+    bathrooms: 5,
+    size: 380,
+    image: "/images/casa-moderna-5.png",
+    features: ["Diseño exclusivo", "Piscina natural", "Jardín zen", "Estudio", "Sala de meditación"],
+    yearBuilt: 2020,
+    energyRating: "A",
+  },
+  {
+    id: "prop4",
+    title: "Casa Minimalista con Jardín",
+    description:
+      "Elegante casa minimalista con líneas puras y grandes ventanales. Jardín perfectamente cuidado con acceso directo desde todas las estancias principales.",
+    price: 680000,
+    location: "Valencia, El Vedat",
+    bedrooms: 3,
+    bathrooms: 2,
+    size: 240,
+    image: "/images/casa-moderna-2.png",
+    features: ["Jardín", "Ventanales panorámicos", "Cocina de diseño", "Garaje", "Zona de barbacoa"],
+    yearBuilt: 2019,
+    energyRating: "B",
+  },
+  {
+    id: "prop5",
+    title: "Residencia Moderna de Dos Plantas",
+    description:
+      "Impresionante residencia moderna con fachada vanguardista, amplios espacios interiores y acabados de lujo. Ubicada en zona tranquila con excelentes comunicaciones.",
+    price: 890000,
+    location: "Madrid, Pozuelo",
+    bedrooms: 4,
+    bathrooms: 3,
+    size: 320,
+    image: "/images/casa-moderna-3.png",
+    features: ["Garaje para 2 coches", "Jardín", "Sala de juegos", "Despacho", "Vestidor principal"],
+    yearBuilt: 2021,
+    energyRating: "A",
+  },
+  {
+    id: "prop6",
+    title: "Ático Dúplex con Terraza Panorámica",
+    description:
+      "Espectacular ático dúplex con terraza panorámica de 100m². Vistas 360º a la ciudad, acabados de lujo y ubicación privilegiada en pleno centro.",
+    price: 950000,
+    location: "Barcelona, Eixample",
+    bedrooms: 3,
+    bathrooms: 3,
+    size: 220,
+    image: "/placeholder.svg?height=400&width=600&text=Ático+Dúplex",
+    features: ["Terraza panorámica", "Ascensor privado", "Domótica", "Vestidor", "Bodega"],
+    yearBuilt: 2018,
+    energyRating: "B",
+  },
+]
+
+// Datos simulados de propiedades exclusivas
+export const exclusiveProperties: ExclusiveProperty[] = [
+  {
+    id: "excl1",
+    title: "Villa de Lujo con Vistas al Mar",
+    description:
+      "Exclusiva villa con acabados de lujo, piscina infinity y vistas panorámicas al Mediterráneo. Diseño vanguardista con materiales sostenibles.",
+    price: 2500000,
+    discount: 15,
+    validUntil: "30/07/2023",
+    image: "/images/casa-moderna-4.png",
+    location: "Costa del Sol, Marbella",
+    bedrooms: 5,
+    bathrooms: 6,
+    size: 550,
+  },
+  {
+    id: "excl2",
+    title: "Mansión de Arquitectura Orgánica",
+    description:
+      "Impresionante mansión con diseño orgánico único en el mundo. Integrada perfectamente en el entorno natural con piscina, spa y todas las comodidades de lujo.",
+    price: 3800000,
+    discount: 10,
+    validUntil: "15/08/2023",
+    image: "/images/casa-moderna-5.png",
+    location: "Costa Brava, Cadaqués",
+    bedrooms: 6,
+    bathrooms: 7,
+    size: 620,
+  },
+  {
+    id: "excl3",
+    title: "Residencia Inteligente de Diseño",
+    description:
+      "Espectacular residencia con la última tecnología en domótica, eficiencia energética y sostenibilidad. Diseño vanguardista con espacios diáfanos y luminosos.",
+    price: 1950000,
+    discount: 12,
+    validUntil: "30/07/2023",
+    image: "/images/casa-moderna-1.png",
+    location: "Madrid, La Finca",
+    bedrooms: 4,
+    bathrooms: 5,
+    size: 420,
+  },
+]
