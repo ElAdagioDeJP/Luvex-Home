@@ -9,8 +9,43 @@ import { Textarea } from "@/components/ui/textarea"
 import { useAuth } from "@/lib/auth-context"
 import { processAIQuery } from "@/lib/ai-service"
 import LoginModal from "./login-modal"
-import Image from "next/image"
+//import Image from "next/image"
 import type { Property } from "@/lib/types"
+// Helper para renderizar contenido con imágenes en Markdown
+// Helper para renderizar contenido con imágenes en Markdown
+function renderContent(content: string) {
+  // Unir todas las líneas para detectar Markdown fragmentado
+  const text = content.replace(/\n/g, ' ')
+  const parts: Array<string | JSX.Element> = []
+  const regex = /!\[([^\]]*)\]\(([^)]+)\)/g
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+
+  while ((match = regex.exec(text)) !== null) {
+    const [fullMatch, alt, src] = match
+    const index = match.index
+    if (index > lastIndex) {
+      parts.push(text.substring(lastIndex, index))
+    }
+    // Normalizar ruta para carpeta de imágenes
+    const normalizedSrc = src.replace(/\/(Imagenes|imagenes)\//, '/images/')
+    parts.push(
+      <img
+        key={index}
+        src={normalizedSrc}
+        alt={alt}
+        className="my-2 rounded max-w-full h-auto"
+      />
+    )
+    lastIndex = index + fullMatch.length
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex))
+  }
+
+  return parts
+}
 import { Card, CardContent } from "@/components/ui/card"
 
 type Message = {
@@ -29,9 +64,12 @@ export default function AIAssistant() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const { user } = useAuth()
 
-  // Scroll to bottom of messages
+  // Scroll to bottom of messages and set focus
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" })
+      messagesEndRef.current.focus({ preventScroll: true })
+    }
   }, [messages])
 
   // Initial greeting message
@@ -158,10 +196,12 @@ export default function AIAssistant() {
                       : "bg-white text-gray-800 border border-gray-200"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{message.content}</p>
+                  <div className="whitespace-pre-wrap">
+                    {renderContent(message.content)}
+                  </div>
                 </div>
 
-                {message.tokensUsed && (
+                {message.tokensUsed > 0 && (
                   <div className="text-xs text-gray-500 mt-1">Tokens utilizados: {message.tokensUsed}</div>
                 )}
 
@@ -205,7 +245,7 @@ export default function AIAssistant() {
                 )}
               </div>
             ))}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef} tabIndex={-1} />
 
             {/* Processing Indicator */}
             {isProcessing && (

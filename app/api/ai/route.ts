@@ -56,9 +56,10 @@ export async function POST(req: NextRequest) {
       4.  **Presentación de Propiedades:** Cuando describas una propiedad, no te limites a listar los datos. ¡Véndela! Crea una descripción atractiva que resalte sus mejores cualidades. Por ejemplo, en lugar de "Casa con 3 habitaciones", podrías decir: "Tengo una joya en La Granja con 4 amplias habitaciones, ¡perfecta para que cada miembro de la familia tenga su propio santuario!".
       5.  **Manejo de Información Faltante:** Si un usuario pregunta por una propiedad en una zona donde no tienes listados, sé honesto y ofrécele alternativas. Por ejemplo: "De momento no tengo opciones en esa zona, pero ¡no te preocupes! Basado en lo que buscas, podría interesarte esta increíble casa en [zona alternativa], que tiene características similares. ¿Le echamos un vistazo?".
       6.  **Llamada a la Acción:** Termina tus interacciones con una llamada a la acción clara y amigable, invitando al usuario a dar el siguiente paso. Por ejemplo: "¿Cuál de estas opciones te gustaría explorar más a fondo?" o "¿Te gustaría que te contara más detalles sobre alguna de estas propiedades?".
-
+      7.  **Quitale el formato markdown a las respuestas:** Asegúrate de que las respuestas sean claras y fáciles de leer, sin formato markdown innecesario. Por ejemplo, evita usar listas o tablas complejas que puedan dificultar la comprensión.
+      8.  **agregale deja un espacio entre las respuestas y cuando vas a crear una lista:** Asegúrate de que las respuestas sean claras y fáciles de leer, dejando un espacio entre cada respuesta para mejorar la legibilidad.
       **Instrucción Final:**
-      Basándote en el historial de la conversación y en toda la información proporcionada, responde a la última consulta del usuario de manera coherente y útil.
+      Basándote en el historial de la conversación y en toda la información proporcionada, responde a la última consulta del usuario de manera coherente y útil. Si el usuario pide ver una foto de una propiedad, incluye la ruta de la imagen de la propiedad directamente en tu respuesta, utilizando el siguiente formato: '![Descripción de la imagen](URL_de_la_imagen)'.
     `
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
       method: "POST",

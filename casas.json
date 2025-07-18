@@ -10,7 +10,7 @@
     "metros_cuadrados": 120,
     "tipo": "Apartamento",
     "descripcion": "Apartamento moderno con excelente vista y vigilancia privada.",
-    "foto": "Imagenes/20241203200818056423000000-o.jpg"
+    "foto": "/Imagenes/20241203200818056423000000-o.jpg"
   },
   {
     "id": 2,
@@ -23,7 +23,7 @@
     "metros_cuadrados": 180,
     "tipo": "Casa",
     "descripcion": "Casa amplia con jardín, estacionamiento y fácil acceso a centros comerciales.",
-    "foto": "Imagenes/casa_en_venta_en_naguanagua_carabobo_243_m2_3_hab_5900001739233253971.jpg"
+    "foto": "/Imagenes/casa_en_venta_en_naguanagua_carabobo_243_m2_3_hab_5900001739233253971.jpg"
   },
   {
     "id": 3,
@@ -36,7 +36,7 @@
     "metros_cuadrados": 100,
     "tipo": "Townhouse",
     "descripcion": "Townhouse acogedor en conjunto cerrado con piscina y áreas verdes.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/IMG-20230322-WA0294.jpg"
   },
   {
     "id": 4,
@@ -49,7 +49,7 @@
     "metros_cuadrados": 80,
     "tipo": "Apartamento",
     "descripcion": "Apartamento céntrico, ideal para parejas o familias pequeñas.",
-    "foto": "Imagenes/MIL20241116120235.jpg"
+    "foto": "/Imagenes/MIL20241116120235.jpg"
   },
   {
     "id": 5,
@@ -62,7 +62,7 @@
     "metros_cuadrados": 250,
     "tipo": "Casa",
     "descripcion": "Casa grande cerca de la playa, perfecta para familias numerosas.",
-    "foto": "Imagenes/las-casas-coloniales-del-casco-historico-de-puerto-cabello-parecen-contar-leyendas-ancestralesjpg-4768.jpg"
+    "foto": "/Imagenes/las-casas-coloniales-del-casco-historico-de-puerto-cabello-parecen-contar-leyendas-ancestralesjpg-4768.jpg"
   },
   {"Comentario IGNORAR" : "Apartir de aqui no existen imagenes de las casas, solo es un ejemplo para completar el JSON"},
   {
@@ -76,7 +76,7 @@
     "metros_cuadrados": 110,
     "tipo": "Apartamento",
     "descripcion": "Apartamento en zona tranquila, ideal para familias con niños.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/ApartamentolosGuayos.png"
   },
   {
     "id": 7,
@@ -89,8 +89,9 @@
     "metros_cuadrados": 95,
     "tipo": "Townhouse",
     "descripcion": "Townhouse en zona residencial con seguridad y áreas recreativas.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/TocuyitoTownhouse.png"
   },
+  
   {
     "id": 8,
     "ciudad": "Mariara",
@@ -102,7 +103,7 @@
     "metros_cuadrados": 150,
     "tipo": "Casa",
     "descripcion": "Casa espaciosa con jardín y garaje, ideal para familias grandes.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/CasaMariara.png"
   },
   {
     "id": 9,
@@ -115,7 +116,7 @@
     "metros_cuadrados": 130,
     "tipo": "Apartamento",
     "descripcion": "Apartamento en zona exclusiva con acabados de lujo y piscina.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/ApartamentoValencia.png"
   },
   {
     "id": 10,
@@ -128,7 +129,7 @@
     "metros_cuadrados": 85,
     "tipo": "Apartamento",
     "descripcion": "Apartamento acogedor en zona tranquila, ideal para parejas.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/ApartamentoGuacara.png"
   },
   {
     "id": 11,
@@ -141,7 +142,7 @@
     "metros_cuadrados": 120,
     "tipo": "Casa",
     "descripcion": "Casa en zona residencial con áreas verdes y seguridad.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/CasaSanJoaquin.png"
   },
   {
     "id": 12,
@@ -154,7 +155,7 @@
     "metros_cuadrados": 160,
     "tipo": "Apartamento",
     "descripcion": "Apartamento lujoso con vista panorámica y piscina.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/ApartamentoNaguanagua.png"
   },
   {
     "id": 13,
@@ -167,7 +168,7 @@
     "metros_cuadrados": 220,
     "tipo": "Casa",
     "descripcion": "Casa amplia con piscina y jardín, ideal para disfrutar en familia.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/CasaPuertoCabello.png"
   },
   {
     "id": 14,
@@ -180,7 +181,7 @@
     "metros_cuadrados": 115,
     "tipo": "Apartamento",
     "descripcion": "Apartamento moderno en zona tranquila, ideal para familias.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/ApartamentolosGuayos2.png"
   },
   {
     "id": 15,
@@ -193,6 +194,6 @@
     "metros_cuadrados": 100,
     "tipo": "Townhouse",
     "descripcion": "Townhouse en zona residencial con seguridad y áreas recreativas.",
-    "foto": "Imagenes/IMG-20230322-WA0294.jpg"
+    "foto": "/Imagenes/TownhouseTocuyito.png"
   }
 ]
