@@ -10,12 +10,22 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <Hero />
-        <PropertyList />
-        <AIAssistant />
-        <ExclusiveOffers />
+        <section id="hero">
+          <Hero />
+        </section>
+        <section id="propiedades">
+          <PropertyList />
+        </section>
+        <section id="asistente">
+          <AIAssistant />
+        </section>
+        <section id="ofertas-especiales">
+          <ExclusiveOffers />
+        </section>
       </main>
-      <Footer />
+      <footer id="footer">
+        <Footer />
+      </footer>
     </div>
   )
 }

@@ -9,42 +9,18 @@ import { Textarea } from "@/components/ui/textarea"
 import { useAuth } from "@/lib/auth-context"
 import { processAIQuery } from "@/lib/ai-service"
 import LoginModal from "./login-modal"
-//import Image from "next/image"
+import Image from "next/image"
 import type { Property } from "@/lib/types"
 // Helper para renderizar contenido con imágenes en Markdown
-// Helper para renderizar contenido con imágenes en Markdown
+// Helper para renderizar contenido AI como HTML (para mostrar imágenes correctamente)
 function renderContent(content: string) {
-  // Unir todas las líneas para detectar Markdown fragmentado
-  const text = content.replace(/\n/g, ' ')
-  const parts: Array<string | JSX.Element> = []
-  const regex = /!\[([^\]]*)\]\(([^)]+)\)/g
-  let lastIndex = 0
-  let match: RegExpExecArray | null
-
-  while ((match = regex.exec(text)) !== null) {
-    const [fullMatch, alt, src] = match
-    const index = match.index
-    if (index > lastIndex) {
-      parts.push(text.substring(lastIndex, index))
-    }
+  // Convierte ![alt](src) a <img src="src" alt="alt" ...>
+  const html = content.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
     // Normalizar ruta para carpeta de imágenes
-    const normalizedSrc = src.replace(/\/(Imagenes|imagenes)\//, '/images/')
-    parts.push(
-      <img
-        key={index}
-        src={normalizedSrc}
-        alt={alt}
-        className="my-2 rounded max-w-full h-auto"
-      />
-    )
-    lastIndex = index + fullMatch.length
-  }
-
-  if (lastIndex < text.length) {
-    parts.push(text.substring(lastIndex))
-  }
-
-  return parts
+    const normalizedSrc = src.replace(/\/(Imagenes|imagenes)\//, '/Imagenes/')
+    return `<img src="${normalizedSrc}" alt="${alt}" style="max-width:100%;height:auto;margin:8px 0;border-radius:8px;" />`
+  })
+  return <span dangerouslySetInnerHTML={{ __html: html }} />
 }
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -61,6 +37,8 @@ export default function AIAssistant() {
   const [input, setInput] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const [ofertasBaratas, setOfertasBaratas] = useState<any[]>([])
+  const [fechaOferta, setFechaOferta] = useState<string>("")
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const { user } = useAuth()
 
@@ -84,6 +62,10 @@ export default function AIAssistant() {
       ])
     }
   }, [messages])
+
+  useEffect(() => {
+    setFechaOferta(new Date().toLocaleDateString());
+  }, []);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return
@@ -199,9 +181,50 @@ export default function AIAssistant() {
                   <div className="whitespace-pre-wrap">
                     {renderContent(message.content)}
                   </div>
+                  {/* Icono de acción al final del mensaje del bot, redirige según el contenido */}
+                  {message.sender === "ai" && (
+                    <div className="flex justify-end mt-2">
+                      <button
+                        title="Ir a la sección relevante"
+                        onClick={() => {
+                          const content = message.content.toLowerCase()
+                          let targetId = "hero" // por defecto
+                          // Si el mensaje es sobre contacto, empresa, información, correo, teléfono, dirección
+                          if (/contacto|empresa|informaci[óo]n|correo|tel[eé]fono|direcci[óo]n/.test(content)) {
+                            targetId = "footer"
+                          }
+                          // Si el mensaje es sobre ofertas especiales o promociones
+                          else if (/oferta|ofertas|especial|especiales|promoci[óo]n/.test(content)) {
+                            targetId = "ofertas-especiales"
+                          }
+                          // Si el mensaje es sobre el asistente virtual o chat
+                          else if (/asistente|chat|ayuda|bot|juan/.test(content)) {
+                            targetId = "asistente"
+                          }
+                          // Si el mensaje es sobre propiedades, casas, inmuebles, apartamentos, destacadas
+                          else if (/\b(casa|propiedad|inmueble|apartamento|destacada)s?\b/.test(content)) {
+                            targetId = "propiedades"
+                          }
+                          // Si el mensaje es sobre el héroe o portada
+                          else if (/inicio|portada|principal|hero/.test(content)) {
+                            targetId = "hero"
+                          }
+                          const section = document.getElementById(targetId)
+                          if (section) {
+                            section.scrollIntoView({ behavior: "smooth" })
+                          }
+                        }}
+                        className="bg-blue-100 hover:bg-blue-200 rounded-full p-2 transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
                 </div>
 
-                {message.tokensUsed > 0 && (
+                {message.tokensUsed !== undefined && message.tokensUsed > 0 && (
                   <div className="text-xs text-gray-500 mt-1">Tokens utilizados: {message.tokensUsed}</div>
                 )}
 

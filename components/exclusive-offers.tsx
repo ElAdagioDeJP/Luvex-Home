@@ -54,7 +54,9 @@ export default function ExclusiveOffers() {
     )
   }
 
-  // Si el usuario tiene tokens, mostramos las ofertas exclusivas
+
+  // ...existing code...
+
   return (
     <section className="py-16 bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4">
