@@ -1,0 +1,113 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+*.cover
+*.coverage
+*.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.lcov
+.pytest_cache/
+
+# Translations
+*.mo
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media
+/staticfiles
+/media/*
+
+# If using django-storages with S3, ignore file-based uploads
+# local media folder
+media/
+
+# Flask stuff (left out but safe)
+instance/
+.webassets-cache
+
+# ENV and virtualenv
+.env
+.env.*
+.venv/
+venv/
+ENV/
+env/
+venv.bak/
+venv/*
+Pipfile.lock
+
+# VS Code
+.vscode/
+
+# JetBrains
+.idea/
+*.iml
+
+# mypy
+.mypy_cache/
+
+# pyre
+.pyre/
+
+# profiling
+.prof
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Sphinx docs
+docs/_build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# dotenv local override
+.env.local
+
+# node modules (if any tooling exists in backend)
+node_modules/
+
+# Optional: migrations (uncomment if you don't want to commit migration files)
+# **/migrations/*.py
+# **/migrations/*.pyc

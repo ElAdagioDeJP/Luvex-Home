@@ -17,6 +17,7 @@ type LoginModalProps = {
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
+  const [password, setPassword] = useState("")
   const [isRegistering, setIsRegistering] = useState(false)
   const [error, setError] = useState("")
   const { login, register } = useAuth()
@@ -33,10 +34,19 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           setError("Por favor, introduce tu nombre")
           return
         }
+        if (!password.trim()) {
+          setError("Por favor, introduce tu contraseña")
+          return
+        }
 
-        await register(name, email)
+        await register(name, email, password)
       } else {
-        await login(email)
+        if (!password.trim()) {
+          setError("Por favor, introduce tu contraseña")
+          return
+        }
+
+        await login(email, password)
       }
 
       onClose()
@@ -57,7 +67,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           <h2 className="text-2xl font-bold text-blue-900">{isRegistering ? "Crear cuenta" : "Iniciar sesión"}</h2>
           <p className="text-gray-600 mt-1">
             {isRegistering
-              ? "Regístrate para recibir 10 tokens gratuitos"
+              ? "Regístrate para acceder al asistente IA"
               : "Accede a tu cuenta para utilizar el asistente IA"}
           </p>
         </div>
@@ -89,6 +99,18 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="tu@email.com"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Contraseña</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Tu contraseña"
               required
             />
           </div>

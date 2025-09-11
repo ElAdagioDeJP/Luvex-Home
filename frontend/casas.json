@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "ciudad": "Valencia",
+    "municipio": "Valencia",
     "zona": "Prebo",
     "precio": 35000,
     "direccion": "Av. 102, Prebo, Valencia, Carabobo",
@@ -14,7 +14,7 @@
   },
   {
     "id": 2,
-    "ciudad": "Naguanagua",
+    "municipio": "Naguanagua",
     "zona": "La Granja",
     "precio": 42000,
     "direccion": "Calle 5, La Granja, Naguanagua, Carabobo",
@@ -27,7 +27,7 @@
   },
   {
     "id": 3,
-    "ciudad": "San Diego",
+    "municipio": "San Diego",
     "zona": "El Remanso",
     "precio": 28000,
     "direccion": "Calle Los Almendros, El Remanso, San Diego, Carabobo",
@@ -40,7 +40,7 @@
   },
   {
     "id": 4,
-    "ciudad": "Guacara",
+    "municipio": "Guacara",
     "zona": "Centro",
     "precio": 22000,
     "direccion": "Av. Bolívar, Centro, Guacara, Carabobo",
@@ -53,7 +53,7 @@
   },
   {
     "id": 5,
-    "ciudad": "Puerto Cabello",
+    "municipio": "Puerto Cabello",
     "zona": "El Palito",
     "precio": 50000,
     "direccion": "Calle El Palito, Puerto Cabello, Carabobo",
@@ -67,7 +67,7 @@
   {"Comentario IGNORAR" : "Apartir de aqui no existen imagenes de las casas, solo es un ejemplo para completar el JSON"},
   {
     "id": 6,
-    "ciudad": "Los Guayos",
+    "municipio": "Los Guayos",
     "zona": "Paraparal",
     "precio": 30000,
     "direccion": "Calle Paraparal, Los Guayos, Carabobo",
@@ -80,10 +80,10 @@
   },
   {
     "id": 7,
-    "ciudad": "Tocuyito",
-    "zona": "El Trigal",
+    "municipio": "Libertador",
+    "zona": "Tocuyito",
     "precio": 27000,
-    "direccion": "Calle El Trigal, Tocuyito, Carabobo",
+    "direccion": "Calle El Trigal, Libertador, Carabobo",
     "habitaciones": 3,
     "banos": 2,
     "metros_cuadrados": 95,
@@ -94,10 +94,10 @@
   
   {
     "id": 8,
-    "ciudad": "Mariara",
-    "zona": "El Rincón",
+    "municipio": "Diego Ibarra",
+    "zona": "Mariara",
     "precio": 32000,
-    "direccion": "Calle El Rincón, Mariara, Carabobo",
+    "direccion": "Calle El Rincón, Diego Ibarra, Carabobo",
     "habitaciones": 4,
     "banos": 3,
     "metros_cuadrados": 150,
@@ -107,7 +107,7 @@
   },
   {
     "id": 9,
-    "ciudad": "Valencia",
+    "municipio": "Valencia",
     "zona": "La Viña",
     "precio": 40000,
     "direccion": "Calle La Viña, Valencia, Carabobo",
@@ -120,7 +120,7 @@
   },
   {
     "id": 10,
-    "ciudad": "Guacara",
+    "municipio": "Guacara",
     "zona": "Yagua",
     "precio": 23000,
     "direccion": "Calle Yagua, Guacara, Carabobo",
@@ -133,7 +133,7 @@
   },
   {
     "id": 11,
-    "ciudad": "San Joaquín",
+    "municipio": "San Joaquín",
     "zona": "El Bosque",
     "precio": 29000,
     "direccion": "Calle El Bosque, San Joaquín, Carabobo",
@@ -146,7 +146,7 @@
   },
   {
     "id": 12,
-    "ciudad": "Naguanagua",
+    "municipio": "Naguanagua",
     "zona": "Valle de Camoruco",
     "precio": 45000,
     "direccion": "Calle Valle de Camoruco, Naguanagua, Carabobo",
@@ -159,7 +159,7 @@
   },
   {
     "id": 13,
-    "ciudad": "Puerto Cabello",
+    "municipio": "Puerto Cabello",
     "zona": "Morón",
     "precio": 48000,
     "direccion": "Calle Morón, Puerto Cabello, Carabobo",
@@ -172,7 +172,7 @@
   },
   {
     "id": 14,
-    "ciudad": "Los Guayos",
+    "municipio": "Los Guayos",
     "zona": "Paraparal",
     "precio": 31000,
     "direccion": "Calle Paraparal, Los Guayos, Carabobo",
@@ -185,10 +185,10 @@
   },
   {
     "id": 15,
-    "ciudad": "Tocuyito",
-    "zona": "El Trigal",
+    "municipio": "Libertador",
+    "zona": "Tocuyito",
     "precio": 28000,
-    "direccion": "Calle El Trigal, Tocuyito, Carabobo",
+    "direccion": "Calle El Trigal, Libertador, Carabobo",
     "habitaciones": 3,
     "banos": 2,
     "metros_cuadrados": 100,

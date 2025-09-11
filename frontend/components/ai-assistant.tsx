@@ -15,11 +15,13 @@ import type { Property } from "@/lib/types"
 // Helper para renderizar contenido AI como HTML (para mostrar imágenes correctamente)
 function renderContent(content: string) {
   // Convierte ![alt](src) a <img src="src" alt="alt" ...>
-  const html = content.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
-    // Normalizar ruta para carpeta de imágenes
+  // Oculta el último párrafo si contiene la instrucción de redirección
+  let html = content.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
     const normalizedSrc = src.replace(/\/(Imagenes|imagenes)\//, '/Imagenes/')
     return `<img src="${normalizedSrc}" alt="${alt}" style="max-width:100%;height:auto;margin:8px 0;border-radius:8px;" />`
   })
+  // Elimina el último párrafo si contiene la marca [REDIRECT:...]
+  html = html.replace(/<p>\[REDIRECT:[^\]]+\]<\/p>$/i, '')
   return <span dangerouslySetInnerHTML={{ __html: html }} />
 }
 import { Card, CardContent } from "@/components/ui/card"
@@ -134,7 +136,7 @@ export default function AIAssistant() {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("es-ES", {
       style: "currency",
-      currency: "EUR",
+      currency: "USD",
       maximumFractionDigits: 0,
     }).format(price)
   }
@@ -187,27 +189,31 @@ export default function AIAssistant() {
                       <button
                         title="Ir a la sección relevante"
                         onClick={() => {
-                          const content = message.content.toLowerCase()
-                          let targetId = "hero" // por defecto
-                          // Si el mensaje es sobre contacto, empresa, información, correo, teléfono, dirección
-                          if (/contacto|empresa|informaci[óo]n|correo|tel[eé]fono|direcci[óo]n/.test(content)) {
-                            targetId = "footer"
+                          // Buscar el último mensaje del usuario
+                          const userMessages = messages.filter(m => m.sender === "user");
+                          const lastUserMessage = userMessages.length > 0 ? userMessages[userMessages.length - 1].content : "";
+                          const content = lastUserMessage.toLowerCase();
+                          let targetId = "hero"; // por defecto
+                          // Si el mensaje es sobre ofertas especiales o promociones (plurales incluidos)
+                          if (/(oferta|ofertas|promoci[óo]n|promociones|descuento|descuentos|rebaja|rebajas|especial|especiales)/.test(content)) {
+                            targetId = "ofertas-especiales";
                           }
-                          // Si el mensaje es sobre ofertas especiales o promociones
-                          else if (/oferta|ofertas|especial|especiales|promoci[óo]n/.test(content)) {
-                            targetId = "ofertas-especiales"
+                          // Si el mensaje es sobre contacto, empresa, información, correo, teléfono, dirección (plurales incluidos)
+                          else if (/(contacto|contactos|empresa|empresas|informaci[óo]n|informaciones|correo|correos|email|emails|tel[eé]fono|tel[eé]fonos|direcci[óo]n|direcciones)/.test(content)) {
+                            targetId = "footer";
                           }
-                          // Si el mensaje es sobre el asistente virtual o chat
-                          else if (/asistente|chat|ayuda|bot|juan/.test(content)) {
-                            targetId = "asistente"
+                          
+                          // Si el mensaje es sobre el asistente virtual o chat (plurales incluidos)
+                          else if (/(asistente|asistentes|chat|chats|ayuda|ayudas|bot|bots|juan|ia)/.test(content)) {
+                            targetId = "asistente";
                           }
-                          // Si el mensaje es sobre propiedades, casas, inmuebles, apartamentos, destacadas
-                          else if (/\b(casa|propiedad|inmueble|apartamento|destacada)s?\b/.test(content)) {
-                            targetId = "propiedades"
+                          // Si el mensaje es sobre propiedades, casas, inmuebles, apartamentos, destacadas (plurales incluidos)
+                          else if (/(casa|casas|propiedad|propiedades|inmueble|inmuebles|apartamento|apartamentos|vivienda|viviendas|hogar|hogares|piso|pisos|departamento|departamentos|residencia|residencias|alquiler|alquileres|venta|ventas|renta|rentas|destacada|destacadas)\b/.test(content)) {
+                            targetId = "propiedades";
                           }
-                          // Si el mensaje es sobre el héroe o portada
-                          else if (/inicio|portada|principal|hero/.test(content)) {
-                            targetId = "hero"
+                          // Si el mensaje es sobre el héroe o portada (plurales incluidos)
+                          else if (/(inicio|inicios|portada|portadas|principal|principales|hero|bienvenida|bienvenidas|home|homes)/.test(content)) {
+                            targetId = "hero";
                           }
                           const section = document.getElementById(targetId)
                           if (section) {
@@ -329,10 +335,11 @@ export default function AIAssistant() {
             <div className="mt-2 text-xs text-gray-500">
               <p>Ejemplos de preguntas:</p>
               <ul className="mt-1 space-y-1">
-                <li>• "¿Tienen propiedades en Madrid con jardín?"</li>
-                <li>• "Recomiéndame una casa con piscina cerca de escuelas en Barcelona"</li>
-                <li>• "¿Cuál es la rentabilidad de inversión en Valencia?"</li>
-                <li>• "¿Cuáles son los trámites para comprar una vivienda?"</li>
+                <li>• "¿Tienen casas en Naguanagua con jardín?"</li>
+                <li>• "Recomiéndame un apartamento en San Diego cerca de colegios"</li>
+                <li>• "¿Cuáles son las zonas más seguras para vivir en Valencia?"</li>
+                <li>• "¿Cuánto cuesta alquilar una vivienda en Guacara?"</li>
+                <li>• "¿Qué trámites necesito para comprar una casa en Puerto Cabello?"</li>
               </ul>
             </div>
           </div>

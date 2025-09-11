@@ -55,6 +55,12 @@ export default function PropertyList() {
     return foto
   }
 
+  // PAGINACIÓN: mostrar 6 propiedades por página y botón para cambiar de página
+  const [page, setPage] = useState(1);
+  const pageSize = 6;
+  const totalPages = Math.ceil(filteredProperties.length / pageSize);
+  const paginatedProperties = filteredProperties.slice((page - 1) * pageSize, page * pageSize);
+
   return (
     <section id="propiedades" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -66,7 +72,7 @@ export default function PropertyList() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {propertiesToShow.map((property) => (
+          {paginatedProperties.map((property) => (
             <div
               key={property.id}
               className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -79,6 +85,7 @@ export default function PropertyList() {
                   style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
                 />
                 <button
+                  title="Agregar a favoritos"
                   onClick={() => toggleFavorite(property.id)}
                   className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
                 >
@@ -196,17 +203,26 @@ export default function PropertyList() {
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          {!showAll && filteredProperties.length > 6 && (
+        {/* Botón de paginación */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-8 gap-2">
             <Button
-              variant="outline"
-              className="border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white"
-              onClick={() => setShowAll(true)}
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+              className="bg-blue-100 text-blue-900 hover:bg-blue-200"
             >
-              Ver Todas las Propiedades
+              Anterior
             </Button>
-          )}
-        </div>
+            <span className="px-4 py-2 text-blue-900 font-semibold">Página {page} de {totalPages}</span>
+            <Button
+              disabled={page === totalPages}
+              onClick={() => setPage(page + 1)}
+              className="bg-blue-100 text-blue-900 hover:bg-blue-200"
+            >
+              Siguiente
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   )
