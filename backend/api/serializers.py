@@ -43,10 +43,21 @@ class RolSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    rol = RolSerializer(read_only=True)
+    rol_id = serializers.PrimaryKeyRelatedField(
+        queryset=Rol.objects.all(),
+        source='rol',
+        write_only=True,
+        required=False
+    )
+    
     class Meta:
         model = Usuario
-        fields = ['id', 'nombres', 'apellidos', 'email', 'telefono', 'cedula', 'rif', 'rol', 'activo']
+        fields = ['id', 'nombres', 'apellidos', 'email', 'password_hash', 'telefono', 'cedula', 'rol', 'rol_id', 'fecha_registro', 'activo']
         read_only_fields = ['fecha_registro']
+        extra_kwargs = {
+            'password_hash': {'write_only': True}
+        }
     
     # Hash password before saving
     def create(self, validated_data):
@@ -108,10 +119,10 @@ class InmuebleSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'codigo_referencia', 'titulo_publicacion', 'descripcion_publica',
             'tipo_inmueble', 'tipo_inmueble_id', 'municipio', 'municipio_id',
-            'direccion_exacta', 'precio_referencial', 'moneda', 'superficie_terreno',
+            'direccion_exacta', 'precio', 'superficie_terreno',
             'superficie_construccion', 'habitaciones', 'banos',
             'puestos_estacionamiento', 'ano_construccion', 'estatus_venta',
-            'estatus_moderacion', 'moderador', 'motivo_rechazo',
+            'estatus_moderacion', 'moderador', 'fecha_moderacion', 'motivo_rechazo',
             'propietario', 'propietario_id', 'fecha_publicacion', 'caracteristicas'
         ]
         read_only_fields = ['estatus_moderacion', 'moderador', 'fecha_moderacion', 'motivo_rechazo']

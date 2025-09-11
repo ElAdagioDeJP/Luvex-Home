@@ -1,18 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-
-
-type User = {
-  id: number
-  nombres: string
-  apellidos: string
-  email: string
-  telefono?: string
-  cedula?: string
-  rol?: any
-  activo: boolean
-}
+import { apiService, type User, type AuthResponse } from "./api"
 
 type AuthContextType = {
   user: User | null
@@ -20,6 +9,7 @@ type AuthContextType = {
   login: (email: string, password: string) => Promise<void>
   register: (data: RegisterData) => Promise<void>
   logout: () => void
+  loading: boolean
 }
 
 type RegisterData = {
@@ -29,6 +19,7 @@ type RegisterData = {
   contrasena: string
   telefono?: string
   cedula?: string
+  rol_id?: number
 }
 
 
@@ -38,80 +29,88 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
   // Cargar usuario y token del localStorage al iniciar
   useEffect(() => {
-    const storedUser = localStorage.getItem("ica_user")
-    const storedToken = localStorage.getItem("ica_token")
-    if (storedUser && storedToken) {
+    const initializeAuth = async () => {
       try {
-        setUser(JSON.parse(storedUser))
-        setToken(storedToken)
+        const storedUser = localStorage.getItem("ica_user")
+        const storedToken = localStorage.getItem("access_token")
+        
+        if (storedUser && storedToken) {
+          setUser(JSON.parse(storedUser))
+          setToken(storedToken)
+          apiService.setToken(storedToken)
+        }
       } catch (error) {
+        console.error("Error al cargar datos de autenticación:", error)
         localStorage.removeItem("ica_user")
-        localStorage.removeItem("ica_token")
+        localStorage.removeItem("access_token")
+      } finally {
+        setLoading(false)
       }
     }
+
+    initializeAuth()
   }, [])
 
   // Guardar usuario y token en localStorage cuando cambien
   useEffect(() => {
     if (user && token) {
       localStorage.setItem("ica_user", JSON.stringify(user))
-      localStorage.setItem("ica_token", token)
+      localStorage.setItem("access_token", token)
     }
   }, [user, token])
 
-  // Login real con JWT
+  // Login usando el servicio API
   const login = async (email: string, password: string) => {
-    const res = await fetch("/api/token/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    })
-    if (!res.ok) throw new Error("Credenciales inválidas")
-    const data = await res.json()
-    setToken(data.access)
-    // Obtener usuario actual
-    const userRes = await fetch(`/api/usuarios/?email=${encodeURIComponent(email)}`, {
-      headers: { Authorization: `Bearer ${data.access}` },
-    })
-    if (!userRes.ok) throw new Error("No se pudo obtener el usuario")
-    const userData = await userRes.json()
-    setUser(userData.results ? userData.results[0] : userData[0] || null)
+    try {
+      setLoading(true)
+      const response = await apiService.login(email, password)
+      setUser(response.user)
+      setToken(response.tokens.access)
+    } catch (error) {
+      console.error("Error en login:", error)
+      throw error
+    } finally {
+      setLoading(false)
+    }
   }
 
-  // Registro real y login automático
+  // Registro usando el servicio API
   const register = async (data: RegisterData) => {
-    const res = await fetch("/api/usuarios/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    try {
+      setLoading(true)
+      const response = await apiService.register({
         nombres: data.nombres,
         apellidos: data.apellidos,
         email: data.email,
         password_hash: data.contrasena,
         telefono: data.telefono,
         cedula: data.cedula,
-      }),
-    })
-    if (!res.ok) {
-      const err = await res.json()
-      throw new Error(err?.email?.[0] || "Error al registrar usuario")
+        rol_id: data.rol_id,
+      })
+      setUser(response.user)
+      setToken(response.tokens.access)
+    } catch (error) {
+      console.error("Error en registro:", error)
+      throw error
+    } finally {
+      setLoading(false)
     }
-    // Login automático
-    await login(data.email, data.contrasena)
   }
 
   const logout = () => {
     setUser(null)
     setToken(null)
+    apiService.logout()
     localStorage.removeItem("ica_user")
-    localStorage.removeItem("ica_token")
+    localStorage.removeItem("access_token")
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout }}>
+    <AuthContext.Provider value={{ user, token, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   )

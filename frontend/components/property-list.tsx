@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import path from "path"
 import Image from "next/image"
 import { Bed, Bath, Maximize, MapPin, Heart, Calendar, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -14,20 +13,34 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useApi, type Property } from "@/lib/api"
 
 export default function PropertyList() {
   const [favorites, setFavorites] = useState<string[]>([])
-  const [filteredProperties, setFilteredProperties] = useState<any[]>([])
-  const [selectedProperty, setSelectedProperty] = useState<any | null>(null)
-  const [showAll, setShowAll] = useState(false)
+  const [filteredProperties, setFilteredProperties] = useState<Property[]>([])
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const { getProperties } = useApi()
 
   useEffect(() => {
-    // Cargar casas desde la API interna
-    fetch("/api/casas")
-      .then((res) => res.json())
-      .then((data) => setFilteredProperties(data))
-      .catch(() => setFilteredProperties([]))
-  }, [])
+    const loadProperties = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const properties = await getProperties()
+        setFilteredProperties(properties)
+      } catch (err) {
+        console.error("Error al cargar propiedades:", err)
+        setError("Error al cargar las propiedades. Por favor, inténtalo de nuevo.")
+        setFilteredProperties([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProperties()
+  }, []) // Removemos getProperties de las dependencias
 
   const toggleFavorite = (id: string) => {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]))
@@ -41,25 +54,43 @@ export default function PropertyList() {
     }).format(price)
   }
 
-  // Mostrar solo 6 propiedades si showAll es false
-  const propertiesToShow = showAll ? filteredProperties : filteredProperties.slice(0, 6)
-
-  // Función para corregir la ruta de la imagen
-  const getImageSrc = (foto: string) => {
-    if (!foto) return "/placeholder.svg?height=400&width=600"
-    // Si la imagen está en /Imagenes, usar /Imagenes/...
-    if (foto.startsWith("/Imagenes/")) return foto
-    // Si la imagen está en public/images, usar /images/...
-    if (foto.startsWith("/images/")) return foto
-    // Si la imagen está en public, usar /...
-    return foto
-  }
-
   // PAGINACIÓN: mostrar 6 propiedades por página y botón para cambiar de página
   const [page, setPage] = useState(1);
   const pageSize = 6;
   const totalPages = Math.ceil(filteredProperties.length / pageSize);
   const paginatedProperties = filteredProperties.slice((page - 1) * pageSize, page * pageSize);
+
+  if (loading) {
+    return (
+      <section id="propiedades" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-blue-900 mb-2">Propiedades Destacadas</h2>
+            <p className="text-gray-600">Cargando propiedades...</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section id="propiedades" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-blue-900 mb-2">Propiedades Destacadas</h2>
+            <p className="text-red-600">{error}</p>
+            <Button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 bg-blue-900 hover:bg-blue-800 text-white"
+            >
+              Reintentar
+            </Button>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="propiedades" className="py-16 bg-gray-50">
@@ -80,8 +111,8 @@ export default function PropertyList() {
               {/* Property Image */}
               <div className="relative h-64 w-full">
                 <img
-                  src={getImageSrc(property.foto)}
-                  alt={property.tipo + ' en ' + property.ciudad}
+                  src={property.image || "/placeholder.svg?height=400&width=600&text=Casa"}
+                  alt={property.title}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
                 />
                 <button
@@ -95,32 +126,32 @@ export default function PropertyList() {
                   />
                 </button>
                 <div className="absolute bottom-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-md font-medium">
-                  {formatPrice(property.precio)}
+                  {formatPrice(property.price)}
                 </div>
               </div>
 
               {/* Property Details */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-blue-900 mb-2">{property.tipo + ' en ' + property.ciudad}</h3>
+                <h3 className="text-xl font-bold text-blue-900 mb-2">{property.title}</h3>
                 <div className="flex items-center text-gray-500 mb-4">
                   <MapPin size={16} className="mr-1" />
-                  <span>{property.zona + ', ' + property.ciudad}</span>
+                  <span>{property.location}</span>
                 </div>
-                <p className="text-gray-600 mb-4 line-clamp-2">{property.descripcion}</p>
+                <p className="text-gray-600 mb-4 line-clamp-2">{property.description}</p>
 
                 <div className="flex items-center justify-between border-t border-gray-100 pt-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex items-center">
                       <Bed size={18} className="text-blue-900 mr-1" />
-                      <span className="text-gray-600">{property.habitaciones}</span>
+                      <span className="text-gray-600">{property.bedrooms}</span>
                     </div>
                     <div className="flex items-center">
                       <Bath size={18} className="text-blue-900 mr-1" />
-                      <span className="text-gray-600">{property.banos}</span>
+                      <span className="text-gray-600">{property.bathrooms}</span>
                     </div>
                     <div className="flex items-center">
                       <Maximize size={18} className="text-blue-900 mr-1" />
-                      <span className="text-gray-600">{property.metros_cuadrados} m²</span>
+                      <span className="text-gray-600">{property.size} m²</span>
                     </div>
                   </div>
                 </div>
@@ -141,44 +172,44 @@ export default function PropertyList() {
                       <>
                         <DialogHeader>
                           <DialogTitle className="text-2xl font-bold text-blue-900">
-                            {selectedProperty.tipo + ' en ' + selectedProperty.ciudad}
+                            {selectedProperty.title}
                           </DialogTitle>
-                          <DialogDescription className="text-gray-500">{selectedProperty.direccion}</DialogDescription>
+                          <DialogDescription className="text-gray-500">{selectedProperty.location}</DialogDescription>
                         </DialogHeader>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                           <div className="relative h-80 w-full rounded-lg overflow-hidden">
                             <img
-                              src={getImageSrc(selectedProperty.foto)}
-                              alt={selectedProperty.tipo + ' en ' + selectedProperty.ciudad}
+                              src={selectedProperty.image || "/placeholder.svg?height=400&width=600&text=Casa"}
+                              alt={selectedProperty.title}
                               style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
                             />
                           </div>
                           <div>
                             <div className="text-2xl font-bold text-amber-500 mb-4">
-                              {formatPrice(selectedProperty.precio)}
+                              {formatPrice(selectedProperty.price)}
                             </div>
-                            <p className="text-gray-700 mb-6">{selectedProperty.descripcion}</p>
+                            <p className="text-gray-700 mb-6">{selectedProperty.description}</p>
 
                             <div className="grid grid-cols-2 gap-4 mb-6">
                               <div className="flex items-center">
                                 <Bed size={20} className="text-blue-900 mr-2" />
                                 <div>
                                   <p className="text-sm text-gray-500">Habitaciones</p>
-                                  <p className="font-medium">{selectedProperty.habitaciones}</p>
+                                  <p className="font-medium">{selectedProperty.bedrooms}</p>
                                 </div>
                               </div>
                               <div className="flex items-center">
                                 <Bath size={20} className="text-blue-900 mr-2" />
                                 <div>
                                   <p className="text-sm text-gray-500">Baños</p>
-                                  <p className="font-medium">{selectedProperty.banos}</p>
+                                  <p className="font-medium">{selectedProperty.bathrooms}</p>
                                 </div>
                               </div>
                               <div className="flex items-center">
                                 <Maximize size={20} className="text-blue-900 mr-2" />
                                 <div>
                                   <p className="text-sm text-gray-500">Superficie</p>
-                                  <p className="font-medium">{selectedProperty.metros_cuadrados} m²</p>
+                                  <p className="font-medium">{selectedProperty.size} m²</p>
                                 </div>
                               </div>
                             </div>

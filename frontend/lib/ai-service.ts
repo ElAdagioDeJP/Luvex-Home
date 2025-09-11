@@ -406,20 +406,8 @@ function getResponse(query: string, queryType: string): AIResponse {
 // Función principal para procesar consultas de IA
 export async function processAIQuery(
   query: string,
-  availableTokens: number,
   history: { content: string; sender: "user" | "ai" }[]
 ): Promise<AIResponse> {
-  // Verificar si el usuario tiene suficientes tokens
-  const queryInfo = determineQueryType(query)
-  if (availableTokens < queryInfo.cost && availableTokens !== Number.POSITIVE_INFINITY) {
-    return {
-      message:
-        "Lo siento, no tienes suficientes tokens para realizar esta consulta. Puedes adquirir más tokens o realizar consultas más simples que requieran menos tokens.",
-      tokensUsed: 0,
-      error: "insufficient_tokens",
-    }
-  }
-
   // Llamar a la API real de OpenAI a través del endpoint interno
   try {
     const res = await fetch("/api/ai", {
@@ -429,13 +417,13 @@ export async function processAIQuery(
     })
     const data = await res.json()
     if (data.error) {
-      return { message: data.message, tokensUsed: 0, error: "openai_error" }
+      return { message: data.message, error: "openai_error" }
     }
     return {
       message: data.message,
-      tokensUsed: data.tokensUsed,
+      properties: data.properties || [],
     }
   } catch (error) {
-    return { message: "Error al conectar con el servicio de IA.", tokensUsed: 0, error: "network_error" }
+    return { message: "Error al conectar con el servicio de IA.", error: "network_error" }
   }
 }

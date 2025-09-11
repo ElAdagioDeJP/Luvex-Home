@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from . import views
 
 router = DefaultRouter()
@@ -19,6 +20,13 @@ router.register(r'mensajes', views.MensajeViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    # expose a friendly path /casas for the frontend to consume
-    path('casas/', views.InmuebleViewSet.as_view({'get': 'casas'}), name='casas-list'),
+    # Authentication endpoints
+    path('auth/register/', views.register_user, name='register'),
+    path('auth/login/', views.login_user, name='login'),
+    path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # Property endpoints
+    path('casas/', views.casas_publicas, name='casas-list'),
+    path('inmuebles/search/', views.InmuebleViewSet.as_view({'get': 'search'}), name='inmuebles-search'),
+    path('inmuebles/<int:pk>/schedule-visit/', views.InmuebleViewSet.as_view({'post': 'schedule_visit'}), name='schedule-visit'),
 ]

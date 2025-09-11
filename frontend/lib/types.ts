@@ -41,7 +41,6 @@ export type AIQuery = {
 // Tipos para las respuestas de IA
 export type AIResponse = {
   message: string
-  tokensUsed: number
   error?: string
   properties?: Property[]
 }

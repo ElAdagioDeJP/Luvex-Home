@@ -30,7 +30,6 @@ type Message = {
   id: string
   content: string
   sender: "user" | "ai"
-  tokensUsed?: number
   properties?: Property[]
 }
 
@@ -89,7 +88,7 @@ export default function AIAssistant() {
     setIsProcessing(true)
 
     try {
-      const response = await processAIQuery(input, user.tokens, newMessages)
+      const response = await processAIQuery(input, newMessages)
 
       if (response.error) {
         setMessages((prev) => [
@@ -107,7 +106,6 @@ export default function AIAssistant() {
             id: Date.now().toString(),
             content: response.message,
             sender: "ai",
-            tokensUsed: response.tokensUsed,
             properties: response.properties,
           },
         ])
@@ -153,18 +151,12 @@ export default function AIAssistant() {
         </div>
 
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-          {/* Token Display */}
+          {/* Header */}
           {user && (
             <div className="bg-blue-50 p-4 border-b border-blue-100 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Bot size={20} className="text-blue-900" />
-                <span className="font-medium text-blue-900">JuanGPT</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-blue-700">Tokens disponibles:</span>
-                <span className="bg-blue-900 text-white px-3 py-1 rounded-full font-medium">
-                  {user.tokens === Number.POSITIVE_INFINITY ? "∞" : user.tokens}
-                </span>
+                <span className="font-medium text-blue-900">JuanGPT - Asistente Virtual</span>
               </div>
             </div>
           )}
@@ -230,9 +222,6 @@ export default function AIAssistant() {
                   )}
                 </div>
 
-                {message.tokensUsed !== undefined && message.tokensUsed > 0 && (
-                  <div className="text-xs text-gray-500 mt-1">Tokens utilizados: {message.tokensUsed}</div>
-                )}
 
                 {/* Propiedades recomendadas */}
                 {message.properties && message.properties.length > 0 && (
@@ -301,7 +290,7 @@ export default function AIAssistant() {
                 <AlertCircle size={20} className="text-amber-500 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-amber-800 text-sm">
-                    Inicia sesión para utilizar el asistente virtual y recibir tokens gratuitos.
+                    Inicia sesión para utilizar el asistente virtual.
                   </p>
                   <Button
                     variant="link"
