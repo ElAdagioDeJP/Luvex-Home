@@ -97,8 +97,7 @@ class Inmueble(models.Model):
 	tipo_inmueble = models.ForeignKey(TipoInmueble, null=True, blank=True, on_delete=models.SET_NULL, related_name='inmuebles')
 	municipio = models.ForeignKey(Municipio, null=True, blank=True, on_delete=models.SET_NULL, related_name='inmuebles')
 	direccion_exacta = models.CharField(max_length=255)
-	precio_referencial = models.DecimalField(max_digits=18, decimal_places=2)
-	moneda = models.CharField(max_length=3, choices=MONEDA_CHOICES, default='USD')
+	precio = models.DecimalField(max_digits=18, decimal_places=2)
 	superficie_terreno = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 	superficie_construccion = models.DecimalField(max_digits=10, decimal_places=2)
 	habitaciones = models.IntegerField(default=0)
@@ -115,8 +114,6 @@ class Inmueble(models.Model):
 
 	propietario = models.ForeignKey(Usuario, null=True, blank=True, on_delete=models.CASCADE, related_name='inmuebles')
 	fecha_publicacion = models.DateTimeField(auto_now_add=True)
-
-	caracteristicas = models.ManyToManyField(Caracteristica, through='InmuebleCaracteristica', related_name='inmuebles')
 
 	def __str__(self):
 		return f"{self.codigo_referencia} - {self.titulo_publicacion}"

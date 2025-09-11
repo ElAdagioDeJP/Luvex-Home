@@ -18,9 +18,9 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-blue-900">
-              Inmo<span className="text-amber-500">AI</span>
-            </span>
+                <span className="text-2xl font-bold text-blue-900">
+                  ICA
+                </span>
           </Link>
 
           {/* Desktop Navigation */}

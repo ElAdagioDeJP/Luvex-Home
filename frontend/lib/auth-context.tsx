@@ -2,84 +2,121 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
+
 type User = {
-  id: string
-  name: string
+  id: number
+  nombres: string
+  apellidos: string
   email: string
-  tokens: number
+  telefono?: string
+  cedula?: string
+  rol?: any
+  activo: boolean
 }
 
 type AuthContextType = {
   user: User | null
-  login: (email: string) => Promise<void>
-  register: (name: string, email: string) => Promise<void>
+  token: string | null
+  login: (email: string, password: string) => Promise<void>
+  register: (data: RegisterData) => Promise<void>
   logout: () => void
-  updateTokens: (newTokenCount: number) => void
 }
+
+type RegisterData = {
+  nombres: string
+  apellidos: string
+  email: string
+  contrasena: string
+  telefono?: string
+  cedula?: string
+}
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [token, setToken] = useState<string | null>(null)
 
-  // Cargar usuario del localStorage al iniciar
+  // Cargar usuario y token del localStorage al iniciar
   useEffect(() => {
-    const storedUser = localStorage.getItem("inmoai_user")
-    if (storedUser) {
+    const storedUser = localStorage.getItem("ica_user")
+    const storedToken = localStorage.getItem("ica_token")
+    if (storedUser && storedToken) {
       try {
         setUser(JSON.parse(storedUser))
+        setToken(storedToken)
       } catch (error) {
-        console.error("Error parsing stored user:", error)
-        localStorage.removeItem("inmoai_user")
+        localStorage.removeItem("ica_user")
+        localStorage.removeItem("ica_token")
       }
     }
   }, [])
 
-  // Guardar usuario en localStorage cuando cambie
+  // Guardar usuario y token en localStorage cuando cambien
   useEffect(() => {
-    if (user) {
-      localStorage.setItem("inmoai_user", JSON.stringify(user))
+    if (user && token) {
+      localStorage.setItem("ica_user", JSON.stringify(user))
+      localStorage.setItem("ica_token", token)
     }
-  }, [user])
+  }, [user, token])
 
-  const login = async (email: string): Promise<void> => {
-    // En una aplicación real, aquí se haría una llamada a la API
-    // Simulamos un login exitoso
-    setUser({
-      id: "user_" + Math.random().toString(36).substr(2, 9),
-      name: email.split("@")[0], // Usamos la parte del email como nombre
-      email,
-      tokens: Number.POSITIVE_INFINITY, // Tokens infinitos para usuarios existentes
+  // Login real con JWT
+  const login = async (email: string, password: string) => {
+    const res = await fetch("/api/token/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     })
+    if (!res.ok) throw new Error("Credenciales inválidas")
+    const data = await res.json()
+    setToken(data.access)
+    // Obtener usuario actual
+    const userRes = await fetch(`/api/usuarios/?email=${encodeURIComponent(email)}`, {
+      headers: { Authorization: `Bearer ${data.access}` },
+    })
+    if (!userRes.ok) throw new Error("No se pudo obtener el usuario")
+    const userData = await userRes.json()
+    setUser(userData.results ? userData.results[0] : userData[0] || null)
   }
 
-  const register = async (name: string, email: string): Promise<void> => {
-    // En una aplicación real, aquí se haría una llamada a la API
-    // Simulamos un registro exitoso
-    setUser({
-      id: "user_" + Math.random().toString(36).substr(2, 9),
-      name,
-      email,
-      tokens: Number.POSITIVE_INFINITY, // Tokens infinitos para nuevos usuarios
+  // Registro real y login automático
+  const register = async (data: RegisterData) => {
+    const res = await fetch("/api/usuarios/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombres: data.nombres,
+        apellidos: data.apellidos,
+        email: data.email,
+        password_hash: data.contrasena,
+        telefono: data.telefono,
+        cedula: data.cedula,
+      }),
     })
+    if (!res.ok) {
+      const err = await res.json()
+      throw new Error(err?.email?.[0] || "Error al registrar usuario")
+    }
+    // Login automático
+    await login(data.email, data.contrasena)
   }
 
   const logout = () => {
     setUser(null)
-    localStorage.removeItem("inmoai_user")
+    setToken(null)
+    localStorage.removeItem("ica_user")
+    localStorage.removeItem("ica_token")
   }
 
-  const updateTokens = (newTokenCount: number) => {
-    if (user) {
-      setUser({
-        ...user,
-        tokens: newTokenCount,
-      })
-    }
-  }
-
-  return <AuthContext.Provider value={{ user, login, register, logout, updateTokens }}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ user, token, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
+
 
 export const useAuth = () => {
   const context = useContext(AuthContext)

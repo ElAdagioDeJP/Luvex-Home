@@ -112,14 +112,14 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="text-amber-500 mr-2 shrink-0" />
-                <span className="text-blue-200">info@inmoai.com</span>
+                <span className="text-blue-200">info@ica.com</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-blue-800 mt-12 pt-6 text-center text-blue-300 text-sm">
-          <p>© {new Date().getFullYear()} InmoAI. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} ICA. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

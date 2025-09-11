@@ -113,7 +113,7 @@ export default function Hero() {
                     habitaciones: bedrooms,
                     precio: priceRange[0].toString()
                   })
-                  window.location.href = `/paginas/searchPage?${params.toString()}`
+                  window.location.href = `/search?${params.toString()}`
                 }}
               >
                 <Search className="mr-2 h-6 w-6" /> Buscar

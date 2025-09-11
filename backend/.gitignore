@@ -59,7 +59,7 @@ db.sqlite3-journal
 # If using django-storages with S3, ignore file-based uploads
 # local media folder
 media/
-
+migrations/
 # Flask stuff (left out but safe)
 instance/
 .webassets-cache

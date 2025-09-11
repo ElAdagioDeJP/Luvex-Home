@@ -1,3 +1,4 @@
+"use client"
 import { useSearchParams } from "next/navigation"
 import casas from "@/casas.json"
 import Image from "next/image"

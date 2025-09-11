@@ -1,9 +1,13 @@
+"use client";
 import React, { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function RegisterUser() {
+const RegisterUser = () => {
   const [form, setForm] = useState({
     nombres: "",
     apellidos: "",
@@ -13,24 +17,32 @@ export default function RegisterUser() {
     cedula: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { register } = useAuth();
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la lógica de registro
     setError("");
-    // Validación simple
     for (const key in form) {
       if (!form[key as keyof typeof form].trim()) {
         setError("Por favor, completa todos los campos.");
         return;
       }
     }
-    // Simulación de registro exitoso
-    alert("Registro exitoso!");
+    setLoading(true);
+    try {
+      await register(form);
+      router.push("/"); // Redirige al home tras registro/login
+    } catch (err: any) {
+      setError(err.message || "Error al registrar usuario");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,13 +51,22 @@ export default function RegisterUser() {
         onSubmit={handleSubmit}
         className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md border border-blue-100"
       >
-        <h2 className="text-2xl font-bold text-blue-900 mb-6 text-center">Registro de Usuario</h2>
+        <h2 className="text-2xl font-bold text-blue-900 mb-6 text-center">
+          Registro de Usuario
+        </h2>
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-md mb-4 text-sm">{error}</div>
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-md mb-4 text-sm">
+            {error}
+          </div>
         )}
         <div className="space-y-4">
           <div>
-            <Label htmlFor="nombres" className="text-blue-900 font-medium">Nombres</Label>
+            <Label
+              htmlFor="nombres"
+              className="text-blue-900 font-medium"
+            >
+              Nombres
+            </Label>
             <Input
               id="nombres"
               name="nombres"
@@ -58,7 +79,12 @@ export default function RegisterUser() {
             />
           </div>
           <div>
-            <Label htmlFor="apellidos" className="text-blue-900 font-medium">Apellidos</Label>
+            <Label
+              htmlFor="apellidos"
+              className="text-blue-900 font-medium"
+            >
+              Apellidos
+            </Label>
             <Input
               id="apellidos"
               name="apellidos"
@@ -71,7 +97,9 @@ export default function RegisterUser() {
             />
           </div>
           <div>
-            <Label htmlFor="email" className="text-blue-900 font-medium">Email</Label>
+            <Label htmlFor="email" className="text-blue-900 font-medium">
+              Email
+            </Label>
             <Input
               id="email"
               name="email"
@@ -84,7 +112,12 @@ export default function RegisterUser() {
             />
           </div>
           <div>
-            <Label htmlFor="contrasena" className="text-blue-900 font-medium">Contraseña</Label>
+            <Label
+              htmlFor="contrasena"
+              className="text-blue-900 font-medium"
+            >
+              Contraseña
+            </Label>
             <Input
               id="contrasena"
               name="contrasena"
@@ -97,7 +130,9 @@ export default function RegisterUser() {
             />
           </div>
           <div>
-            <Label htmlFor="telefono" className="text-blue-900 font-medium">Teléfono</Label>
+            <Label htmlFor="telefono" className="text-blue-900 font-medium">
+              Teléfono
+            </Label>
             <Input
               id="telefono"
               name="telefono"
@@ -110,7 +145,9 @@ export default function RegisterUser() {
             />
           </div>
           <div>
-            <Label htmlFor="cedula" className="text-blue-900 font-medium">Cédula</Label>
+            <Label htmlFor="cedula" className="text-blue-900 font-medium">
+              Cédula
+            </Label>
             <Input
               id="cedula"
               name="cedula"
@@ -123,10 +160,16 @@ export default function RegisterUser() {
             />
           </div>
         </div>
-        <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-800 text-white mt-6">
-          Registrarse
+        <Button
+          type="submit"
+          className="w-full bg-blue-900 hover:bg-blue-800 text-white mt-6"
+          disabled={loading}
+        >
+          {loading ? "Registrando..." : "Registrarse"}
         </Button>
       </form>
     </section>
   );
-}
+};
+
+export default RegisterUser;

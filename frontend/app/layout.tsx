@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <title>InmoAI - Inmobiliaria con Asistente IA</title>
+  <title>ICA - Inmobiliaria Carabobo Asesores</title>
         <meta name="description" content="Encuentra tu hogar ideal con ayuda de inteligencia artificial" />
       </head>
       <body>

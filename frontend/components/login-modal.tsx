@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/lib/auth-context"
+import { useRouter } from "next/navigation"
 
 type LoginModalProps = {
   isOpen: boolean
   onClose: () => void
 }
+
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [email, setEmail] = useState("")
@@ -20,38 +22,42 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [password, setPassword] = useState("")
   const [isRegistering, setIsRegistering] = useState(false)
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const { login, register } = useAuth()
+  const router = useRouter()
 
   if (!isOpen) return null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
-
+    setLoading(true)
     try {
       if (isRegistering) {
         if (!name.trim()) {
           setError("Por favor, introduce tu nombre")
+          setLoading(false)
           return
         }
         if (!password.trim()) {
           setError("Por favor, introduce tu contraseña")
+          setLoading(false)
           return
         }
-
-        await register(name, email, password)
+        await register({ nombres: name, apellidos: "", email, contrasena: password })
       } else {
         if (!password.trim()) {
           setError("Por favor, introduce tu contraseña")
+          setLoading(false)
           return
         }
-
         await login(email, password)
       }
-
       onClose()
-    } catch (err) {
-      setError("Ha ocurrido un error. Por favor, inténtalo de nuevo.")
+    } catch (err: any) {
+      setError(err.message || "Ha ocurrido un error. Por favor, inténtalo de nuevo.")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -115,8 +121,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             />
           </div>
 
-          <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-800 text-white">
-            {isRegistering ? "Registrarse" : "Iniciar sesión"}
+          <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-800 text-white" disabled={loading}>
+            {loading ? (isRegistering ? "Registrando..." : "Ingresando...") : (isRegistering ? "Registrarse" : "Iniciar sesión")}
           </Button>
         </form>
 
@@ -125,7 +131,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             {isRegistering ? "¿Ya tienes una cuenta?" : "¿No tienes una cuenta?"}{" "}
             <button
               type="button"
-              onClick={() => setIsRegistering(!isRegistering)}
+              onClick={() => {
+                if (!isRegistering) {
+                  router.push("/register")
+                  onClose()
+                } else {
+                  setIsRegistering(false)
+                }
+              }}
               className="text-blue-900 hover:underline font-medium"
             >
               {isRegistering ? "Iniciar sesión" : "Registrarse"}
