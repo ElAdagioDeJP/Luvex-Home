@@ -86,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         nombres: data.nombres,
         apellidos: data.apellidos,
         email: data.email,
-        password_hash: data.contrasena,
+        password: data.contrasena,
         telefono: data.telefono,
         cedula: data.cedula,
         rol_id: data.rol_id,

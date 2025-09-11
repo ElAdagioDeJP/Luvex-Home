@@ -104,7 +104,7 @@ class ApiService {
     nombres: string
     apellidos: string
     email: string
-    password_hash: string
+    password: string
     telefono?: string
     cedula?: string
     rol_id?: number
@@ -222,6 +222,22 @@ class ApiService {
   async getRoles(): Promise<any[]> {
     return await this.request<any[]>('/roles/')
   }
+
+  // Métodos específicos para el formulario de inmuebles
+  async getCiudadesByEstado(estadoId: number): Promise<any[]> {
+    return await this.request<any[]>(`/ciudades/?estado=${estadoId}`)
+  }
+
+  async getMunicipiosByCiudad(ciudadId: number): Promise<any[]> {
+    return await this.request<any[]>(`/municipios/?ciudad=${ciudadId}`)
+  }
+
+  async createProperty(propertyData: any): Promise<any> {
+    return await this.request<any>('/inmuebles/', {
+      method: 'POST',
+      body: JSON.stringify(propertyData),
+    })
+  }
 }
 
 // Instancia singleton del servicio API
@@ -243,6 +259,9 @@ export const useApi = () => {
     getTiposInmueble: apiService.getTiposInmueble.bind(apiService),
     getCaracteristicas: apiService.getCaracteristicas.bind(apiService),
     getRoles: apiService.getRoles.bind(apiService),
+    getCiudadesByEstado: apiService.getCiudadesByEstado.bind(apiService),
+    getMunicipiosByCiudad: apiService.getMunicipiosByCiudad.bind(apiService),
+    createProperty: apiService.createProperty.bind(apiService),
     getToken: apiService.getToken.bind(apiService),
   }
 }

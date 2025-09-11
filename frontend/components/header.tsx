@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, User, LogIn } from "lucide-react"
+import { Menu, X, User, LogIn, Home, Calendar, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/lib/auth-context"
 import LoginModal from "./login-modal"
@@ -42,16 +42,33 @@ export default function Header() {
           {/* User Actions */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-full">
-                  <span className="text-blue-900 font-medium">
-                    {user.tokens === Number.POSITIVE_INFINITY ? "∞" : user.tokens}
-                  </span>
-                  <span className="text-sm text-blue-700">tokens</span>
-                </div>
-                <Button variant="ghost" className="flex items-center gap-2" onClick={logout}>
-                  <User size={18} />
-                  <span>{user.name}</span>
+              <div className="flex items-center gap-2">
+                <Button asChild variant="outline" size="sm" className="border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white">
+                  <Link href="/add-property">
+                    <Home className="mr-1 h-4 w-4" />
+                    Agregar
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link href="/profile">
+                    <User className="mr-1 h-4 w-4" />
+                    Perfil
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link href="/appointments">
+                    <Calendar className="mr-1 h-4 w-4" />
+                    Citas
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm">
+                  <Link href="/messages">
+                    <MessageSquare className="mr-1 h-4 w-4" />
+                    Mensajes
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={logout}>
+                  Cerrar Sesión
                 </Button>
               </div>
             ) : (
@@ -104,16 +121,41 @@ export default function Header() {
                 Contacto
               </Link>
               {user ? (
-                <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                  <div className="flex items-center gap-2">
-                    <User size={18} className="text-blue-900" />
-                    <span className="text-blue-900">{user.name}</span>
+                <div className="pt-2 border-t border-gray-100 space-y-3">
+                  <div className="space-y-2">
+                    <Button asChild variant="outline" className="w-full border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white">
+                      <Link href="/add-property" onClick={() => setIsMenuOpen(false)}>
+                        <Home className="mr-2 h-4 w-4" />
+                        Agregar Inmueble
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="w-full justify-start text-blue-900">
+                      <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
+                        <User className="mr-2 h-4 w-4" />
+                        Mi Perfil
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="w-full justify-start text-blue-900">
+                      <Link href="/appointments" onClick={() => setIsMenuOpen(false)}>
+                        <Calendar className="mr-2 h-4 w-4" />
+                        Mis Citas
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="w-full justify-start text-blue-900">
+                      <Link href="/messages" onClick={() => setIsMenuOpen(false)}>
+                        <MessageSquare className="mr-2 h-4 w-4" />
+                        Mensajes
+                      </Link>
+                    </Button>
                   </div>
-                  <div className="flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-full">
-                    <span className="text-blue-900 font-medium">
-                      {user.tokens === Number.POSITIVE_INFINITY ? "∞" : user.tokens}
-                    </span>
-                    <span className="text-sm text-blue-700">tokens</span>
+                  <div className="flex items-center justify-between pt-2 border-t border-gray-200">
+                    <div className="flex items-center gap-2">
+                      <User size={18} className="text-blue-900" />
+                      <span className="text-blue-900">{user.name}</span>
+                    </div>
+                    <Button variant="ghost" className="text-blue-900" onClick={logout}>
+                      Cerrar Sesión
+                    </Button>
                   </div>
                 </div>
               ) : (

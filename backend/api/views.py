@@ -29,19 +29,19 @@ class ReadOnlyOrIsOwner(permissions.BasePermission):
 class EstadoViewSet(viewsets.ModelViewSet):
 	queryset = Estado.objects.all().order_by('nombre_estado')
 	serializer_class = EstadoSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+	permission_classes = [permissions.AllowAny]
 
 
 class CiudadViewSet(viewsets.ModelViewSet):
 	queryset = Ciudad.objects.select_related('estado').all()
 	serializer_class = CiudadSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+	permission_classes = [permissions.AllowAny]
 
 
 class MunicipioViewSet(viewsets.ModelViewSet):
 	queryset = Municipio.objects.select_related('ciudad').all()
 	serializer_class = MunicipioSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+	permission_classes = [permissions.AllowAny]
 
 
 class RolViewSet(viewsets.ModelViewSet):
@@ -59,13 +59,13 @@ class UsuarioViewSet(viewsets.ModelViewSet):
 class TipoInmuebleViewSet(viewsets.ModelViewSet):
 	queryset = TipoInmueble.objects.all()
 	serializer_class = TipoInmuebleSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+	permission_classes = [permissions.AllowAny]
 
 
 class CaracteristicaViewSet(viewsets.ModelViewSet):
 	queryset = Caracteristica.objects.all()
 	serializer_class = CaracteristicaSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+	permission_classes = [permissions.AllowAny]
 
 
 class InmuebleViewSet(viewsets.ModelViewSet):
@@ -247,7 +247,7 @@ def register_user(request):
 		data = request.data
 		
 		# Validar datos requeridos
-		required_fields = ['nombres', 'apellidos', 'email', 'password_hash']
+		required_fields = ['nombres', 'apellidos', 'email', 'password']
 		for field in required_fields:
 			if field not in data:
 				return Response(
@@ -267,7 +267,7 @@ def register_user(request):
 			nombres=data['nombres'],
 			apellidos=data['apellidos'],
 			email=data['email'],
-			password_hash=data['password_hash'],
+			password_hash=data['password'],
 			telefono=data.get('telefono', ''),
 			cedula=data.get('cedula', ''),
 			rol_id=data.get('rol_id')
