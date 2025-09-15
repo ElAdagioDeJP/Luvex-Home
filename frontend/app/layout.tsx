@@ -21,7 +21,7 @@ export default function RootLayout({
     "@type": "RealEstateAgent",
     "name": "Luvex",
     "url": siteUrl,
-  "logo": `${siteUrl}/LogoIcaSinfondo.png`,
+  "logo": `${siteUrl}/logo-luvex.png`,
     "description": description,
     "sameAs": [],
     "address": {
@@ -69,7 +69,7 @@ export default function RootLayout({
 }
 
 export const metadata = {
-  generator: 'v0.dev',
+  generator: 'AdagiosINC.dev',
   title: siteTitleBase,
   description: siteTagline,
 }

@@ -26,3 +26,5 @@ if (Test-Path "requirements.txt") {
 # Instalar dependencias de npm en la carpeta "AppWeb"
 
 Write-Host "Instalacion completada.¡Ya estas listo para trabajar!"
+
+python manage.py runserver
