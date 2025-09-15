@@ -1,5 +1,5 @@
-# Script para iniciar el proyecto ICA Bienes Raíces
-Write-Host "Iniciando proyecto ICA Bienes Raíces..." -ForegroundColor Green
+# Script para iniciar el proyecto Luvex
+Write-Host "Iniciando proyecto Luvex..." -ForegroundColor Green
 
 # Verificar si Python está instalado
 try {
