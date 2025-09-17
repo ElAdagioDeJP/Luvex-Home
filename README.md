@@ -1,6 +1,6 @@
-# Luvex - Sistema de Gestión Inmobiliaria
+# Veri Hogar - Sistema de Gestión Inmobiliaria
 
-Luvex es un sistema completo de gestión inmobiliaria desarrollado con Django REST Framework (backend) y Next.js (frontend), con integración de inteligencia artificial para asistencia en la búsqueda de propiedades.
+Veri Hogar es un sistema completo de gestión inmobiliaria desarrollado con Django REST Framework (backend) y Next.js (frontend), con integración de inteligencia artificial para asistencia en la búsqueda de propiedades.
 
 ## 🚀 Características
 
@@ -51,7 +51,7 @@ pip install -r requirements.txt
 
 # Configurar variables de entorno
 # Crear archivo .env con:
-DB_NAME=luvex_bienes_raices
+DB_NAME=veri_hogar_bienes_raices
 DB_USER=tu_usuario_mysql
 DB_PASSWORD=tu_contraseña_mysql
 DB_HOST=localhost
@@ -123,7 +123,7 @@ npm run dev
 ## 🎯 Uso del Sistema
 
 ### Usuario Administrador
-- **Email**: admin@luvex.com
+- **Email**: admin@verihogar.com
 - **Contraseña**: admin123
 
 ### Funcionalidades Principales
@@ -189,8 +189,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 📞 Soporte
 
-Para soporte técnico o consultas, contacta a:
-- Email: soporte@luvex.com
+- Email: soporte@verihogar.com
 - Teléfono: +58 241-1234567
 
 ## 🏗️ Arquitectura
@@ -222,4 +221,4 @@ Para soporte técnico o consultas, contacta a:
 
 ---
 
-**Desarrollado con ❤️ para Luvex**
+**Desarrollado con ❤️ para Veri Hogar**

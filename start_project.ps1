@@ -1,5 +1,5 @@
-# Script para iniciar el proyecto Luvex
-Write-Host "Iniciando proyecto Luvex..." -ForegroundColor Green
+# Script para iniciar el proyecto Veri Hogar
+Write-Host "Iniciando proyecto Veri Hogar..." -ForegroundColor Green
 
 # Verificar si Python está instalado
 try {

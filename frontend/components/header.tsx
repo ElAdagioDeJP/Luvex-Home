@@ -18,8 +18,8 @@ export default function Header() {
         <div className="flex items-center justify-between">
       {/* Logo */}
       <Link href="/" className="flex items-center">
-        <img src="/logo-luvex-rounded.png" alt="Luvex" className="h-10 w-10 mr-3 object-contain" />
-        <span className="text-2xl font-bold text-blue-900 hidden sm:inline">Luvex</span>
+  <img src="/Logo-VeriHogar.png" alt="Veri Hogar" className="h-16 w-15 mr-5 object-contain" />
+
       </Link>
 
           {/* Desktop Navigation */}

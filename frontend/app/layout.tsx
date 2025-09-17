@@ -3,10 +3,10 @@ import "@/app/globals.css"
 import { AuthProvider } from "@/lib/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
 
-const siteTitleBase = 'Luvex'
+const siteTitleBase = 'Veri Hogar'
 const siteTagline = 'Encuentra tu hogar ideal con ayuda de inteligencia artificial'
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-const siteImage = `${siteUrl}/placeholder.jpg`
+const siteImage = `${siteUrl}/Icono-sinfondoVeriHogar.png`
 
 export default function RootLayout({
   children,
@@ -14,14 +14,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const title = `${siteTitleBase} — ${siteTagline}`
-  const description = siteTagline + ' — Luvex ofrece búsqueda avanzada, filtros y un asistente IA para ayudarte a encontrar la propiedad perfecta.'
+  const description = siteTagline + ' — Veri Hogar ofrece búsqueda avanzada, filtros y un asistente IA para ayudarte a encontrar la propiedad perfecta.'
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    "name": "Luvex",
+    "name": "Veri Hogar",
     "url": siteUrl,
-  "logo": `${siteUrl}/logo-luvex.png`,
+  "logo": `${siteUrl}/Icono-sinfondoVeriHogar.png`,
     "description": description,
     "sameAs": [],
     "address": {
@@ -36,8 +36,8 @@ export default function RootLayout({
       <head>
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta name="keywords" content="inmuebles, propiedades, bienes raices, Luvex, alquiler, venta, asistente IA, buscar casa" />
-        <meta name="author" content="Luvex" />
+  <meta name="keywords" content="inmuebles, propiedades, bienes raices, Veri Hogar, alquiler, venta, asistente IA, buscar casa" />
+  <meta name="author" content="Veri Hogar" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
         {/* Open Graph */}
@@ -55,7 +55,7 @@ export default function RootLayout({
         <meta name="twitter:image" content={siteImage} />
 
         <link rel="canonical" href={siteUrl} />
-        <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/Icono-sinfondoVeriHogar.png" />
 
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </head>
