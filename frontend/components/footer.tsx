@@ -15,15 +15,15 @@ export default function Footer() {
               Transformando la experiencia inmobiliaria con inteligencia artificial para encontrar tu hogar ideal.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-blue-200 hover:text-amber-500 transition-colors">
+              <Link href="https://www.facebook.com/share/17AFY2YKtq/" className="text-blue-200 hover:text-amber-500 transition-colors">
                 <Facebook size={20} />
                 <span className="sr-only">Facebook</span>
               </Link>
-              <Link href="#" className="text-blue-200 hover:text-amber-500 transition-colors">
+              <Link href="https://x.com/VeriHogar" className="text-blue-200 hover:text-amber-500 transition-colors">
                 <Twitter size={20} />
                 <span className="sr-only">Twitter</span>
               </Link>
-              <Link href="#" className="text-blue-200 hover:text-amber-500 transition-colors">
+              <Link href="https://www.instagram.com/veri_hogar" className="text-blue-200 hover:text-amber-500 transition-colors">
                 <Instagram size={20} />
                 <span className="sr-only">Instagram</span>
               </Link>
@@ -104,22 +104,22 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin size={18} className="text-amber-500 mr-2 mt-1 shrink-0" />
-                <span className="text-blue-200">Calle Principal 123, 28001 Madrid, España</span>
+                <span className="text-blue-200">Oficina 204, Piso 2, Torre 4, Av Cedeño, Valencia, Venezuela</span>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="text-amber-500 mr-2 shrink-0" />
-                <span className="text-blue-200">+34 91 123 45 67</span>
+                <span className="text-blue-200">+58412-4507593</span>
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="text-amber-500 mr-2 shrink-0" />
-                <span className="text-blue-200">info@ica.com</span>
+                <span className="text-blue-200">verihogar@gmail.com</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-blue-800 mt-12 pt-6 text-center text-blue-300 text-sm">
-          <p>© {new Date().getFullYear()} ICA. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} VeriHogar. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
