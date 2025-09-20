@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { signIn } from "next-auth/react";
 
 const RegisterUser = () => {
   const [form, setForm] = useState({
@@ -124,7 +125,13 @@ const RegisterUser = () => {
   };
 
   const handleSocialLogin = (provider: string) => {
-    // Placeholder para funcionalidad futura
+    // Si es Google, usar next-auth
+    if (provider === "google") {
+      signIn("google", { callbackUrl: "/" });
+      return;
+    }
+
+    // Otros providers (por ahora solo log)
     console.log(`Iniciar sesión con ${provider}`);
   };
 
