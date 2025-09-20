@@ -125,14 +125,13 @@ const RegisterUser = () => {
   };
 
   const handleSocialLogin = (provider: string) => {
-    // Si es Google, usar next-auth
+    // Usar next-auth para iniciar con Google u otros providers
     if (provider === "google") {
       signIn("google", { callbackUrl: "/" });
       return;
     }
-
-    // Otros providers (por ahora solo log)
-    console.log(`Iniciar sesión con ${provider}`);
+    // por defecto intentar con el provider recibido
+    signIn(provider, { callbackUrl: "/" });
   };
 
   return (
