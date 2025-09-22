@@ -189,8 +189,6 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 📞 Soporte
 
-- Email: soporte@verihogar.com
-- Teléfono: +58 241-1234567
 
 ## 🏗️ Arquitectura
 
@@ -210,6 +208,28 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 │   └── public/             # Archivos estáticos
 └── README.md              # Este archivo
 ```
+
+## 🔐 Google OAuth (NextAuth) - Setup rápido
+
+1. Ve a Google Cloud Console -> API & Services -> Credentials -> Create Credentials -> OAuth client ID.
+2. Tipo de aplicación: Web application. En Authorized redirect URIs agrega:
+	- http://localhost:3000/api/auth/callback/google
+3. Copia el Client ID y Client Secret.
+4. En el frontend crea `.env.local` con las siguientes variables (o usa `frontend/.env.example` como plantilla):
+	- GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+	- GOOGLE_CLIENT_SECRET=your-google-client-secret
+	- NEXTAUTH_SECRET=un_valor_secreto_largo
+
+5. (Opcional) Si quieres que el backend valide tokens de Google, hemos incluido un endpoint en Django:
+	- POST /api/auth/google/  -> recibe JSON { "id_token": "..." } y devolverá los tokens JWT del backend si el email es válido.
+
+6. Asegúrate de instalar dependencias backend:
+	- pip install -r backend/requirements.txt
+	Esto incluye `google-auth` para verificar id_tokens.
+
+7. Reinicia ambos servidores (frontend y backend) para que tomen las nuevas variables de entorno.
+
+Si necesitas ayuda para crear las credenciales en Google Cloud Console puedo guiarte paso a paso.
 
 ## 🔄 Flujo de Trabajo
 

@@ -340,3 +340,56 @@ def login_user(request):
 			status=status.HTTP_500_INTERNAL_SERVER_ERROR
 		)
 
+
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def google_auth(request):
+	"""Validar id_token de Google, crear/actualizar usuario y devolver tokens JWT."""
+	try:
+		token = request.data.get('id_token') or request.data.get('token')
+		if not token:
+			return Response({'error': 'No token provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+		# Import here to avoid adding google-auth to runtime unless endpoint is used
+		from google.oauth2 import id_token as google_id_token
+		from google.auth.transport import requests as google_requests
+
+		idinfo = google_id_token.verify_oauth2_token(token, google_requests.Request(), audience=None)
+
+		email = idinfo.get('email')
+		name = idinfo.get('name', '')
+		sub = idinfo.get('sub')
+
+		if not email:
+			return Response({'error': 'Token does not contain email'}, status=status.HTTP_400_BAD_REQUEST)
+
+		usuario, created = Usuario.objects.get_or_create(email=email, defaults={
+			'nombres': name.split(' ')[0] if name else '',
+			'apellidos': ' '.join(name.split(' ')[1:]) if name else '',
+			'password_hash': Usuario.objects.make_random_password() if hasattr(Usuario.objects, 'make_random_password') else ''
+		})
+
+		# Optionally store the 'sub' in a profile field if available
+		# if hasattr(usuario, 'google_sub'):
+		#     usuario.google_sub = sub
+		#     usuario.save()
+
+		# Generar tokens JWT
+		refresh = RefreshToken.for_user(usuario)
+
+		return Response({
+			'ok': True,
+			'email': email,
+			'created': created,
+			'user': UsuarioSerializer(usuario).data,
+			'tokens': {
+				'refresh': str(refresh),
+				'access': str(refresh.access_token),
+			}
+		}, status=status.HTTP_200_OK)
+
+	except ValueError:
+		return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+	except Exception as e:
+		return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
